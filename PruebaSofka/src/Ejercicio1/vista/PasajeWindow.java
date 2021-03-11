@@ -1,4 +1,4 @@
-package vista;
+package Ejercicio1.vista;
 
 import java.awt.EventQueue;
 
@@ -6,16 +6,25 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+
+import Ejercicio1.modelo.PasajeAvion;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PasajeWindow {
 
 	private JFrame frame;
 	private JTextField textField_distancia;
 	private JTextField textField_dias;
+	private Ejercicio1.modelo.PasajeAvion miPasaje;
 
 	/**
 	 * Launch the application.
@@ -38,6 +47,7 @@ public class PasajeWindow {
 	 */
 	public PasajeWindow() {
 		initialize();
+		miPasaje = new PasajeAvion();
 	}
 
 	/**
@@ -73,16 +83,59 @@ public class PasajeWindow {
 		lblNewLabel_2.setBounds(334, 63, 46, 14);
 		frame.getContentPane().add(lblNewLabel_2);
 		
+		JLabel lblNewLabel_Total = new JLabel("");
+		lblNewLabel_Total.setVisible(false);
+		lblNewLabel_Total.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblNewLabel_Total.setBounds(183, 131, 60, 20);
+		frame.getContentPane().add(lblNewLabel_Total);
+		
+		JLabel lblNewLabel_3 = new JLabel("Precio Pasaje");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel_3.setBounds(103, 21, 225, 29);
+		frame.getContentPane().add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_TotalL = new JLabel("TOTAL:");
+		lblNewLabel_TotalL.setVisible(false);
+		lblNewLabel_TotalL.setFont(new Font("Arial", Font.BOLD, 12));
+		lblNewLabel_TotalL.setBounds(138, 134, 46, 14);
+		frame.getContentPane().add(lblNewLabel_TotalL);
+		
+		
 		JButton btnPasaje = new JButton("Comprar");
 		btnPasaje.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Creacion de atributos locales
+				DecimalFormat df = new DecimalFormat("#.##");
+				int dias = Integer.parseInt(textField_dias.getText());
+				double distancia = Double.parseDouble(textField_distancia.getText());
+				double precio = 0;
+				
+				//Activacion de los label para mostrar informacion
+				
+				if(dias> 0 && distancia>0) {
+					lblNewLabel_TotalL.setVisible(true);
+					lblNewLabel_Total.setVisible(true);
+					
+					
+					miPasaje = new PasajeAvion(distancia, dias);
+					
+					precio = miPasaje.precioPasaje(dias, distancia);
+					//System.out.println("$"+precio);
+					lblNewLabel_Total.setText("Su total es de: $"+ df.format(precio));
+				}else {
+					lblNewLabel_Total.setVisible(true);
+					lblNewLabel_Total.setText("Ingrese datos en los campos");
+				}
+				
 			}
 		});
 		btnPasaje.setBounds(157, 97, 89, 23);
 		frame.getContentPane().add(btnPasaje);
 		
-		JLabel lblNewLabel_Total = new JLabel("");
-		lblNewLabel_Total.setBounds(10, 135, 414, 20);
-		frame.getContentPane().add(lblNewLabel_Total);
+
+		
 	}
+	
+	
 }
