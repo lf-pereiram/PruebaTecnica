@@ -86,7 +86,7 @@ public class PasajeWindow {
 		JLabel lblNewLabel_Total = new JLabel("");
 		lblNewLabel_Total.setVisible(false);
 		lblNewLabel_Total.setFont(new Font("Arial", Font.PLAIN, 13));
-		lblNewLabel_Total.setBounds(183, 131, 60, 20);
+		lblNewLabel_Total.setBounds(160, 131, 218, 20);
 		frame.getContentPane().add(lblNewLabel_Total);
 		
 		JLabel lblNewLabel_3 = new JLabel("Precio Pasaje");
@@ -98,7 +98,7 @@ public class PasajeWindow {
 		JLabel lblNewLabel_TotalL = new JLabel("TOTAL:");
 		lblNewLabel_TotalL.setVisible(false);
 		lblNewLabel_TotalL.setFont(new Font("Arial", Font.BOLD, 12));
-		lblNewLabel_TotalL.setBounds(138, 134, 46, 14);
+		lblNewLabel_TotalL.setBounds(116, 134, 46, 14);
 		frame.getContentPane().add(lblNewLabel_TotalL);
 		
 		
@@ -121,11 +121,8 @@ public class PasajeWindow {
 					miPasaje = new PasajeAvion(distancia, dias);
 					
 					precio = miPasaje.precioPasaje(dias, distancia);
-					//System.out.println("$"+precio);
+					System.out.println("$"+precio);
 					lblNewLabel_Total.setText("Su total es de: $"+ df.format(precio));
-				}else {
-					lblNewLabel_Total.setVisible(true);
-					lblNewLabel_Total.setText("Ingrese datos en los campos");
 				}
 				
 			}
