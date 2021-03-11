@@ -120,6 +120,31 @@ public class Avion {
 		return bultos.get(index);
 	}
 	
+	public double ingresoEnPesos (ArrayList<Bulto> bultos) {
+		double ingreso = 0;
+		
+		if(bultos.size()>0) {
+			for (int i = 1; i < bultos.size(); i++) {
+				ingreso += bultos.get(i).getPrecio();
+			}
+		}
+	
+		return ingreso;
+	}
+	
+	public double ingresoEnDolares (ArrayList<Bulto> bultos) {
+		double ingreso = 0;
+		final double dolar = 3400; //suponiendo que esta es la tasa fija actual
+		
+		if(bultos.size()>0) {
+			for (int i = 1; i < bultos.size(); i++) {
+				ingreso += bultos.get(i).getPrecio()/dolar;
+			}
+		}
+	
+		return ingreso;
+	}
+	
 	public static void main(String[] args) {	
 		Avion avionCarga = new Avion();
 		
@@ -143,10 +168,30 @@ public class Avion {
 		bultos.add(new Bulto(45, 16));
 		avionCarga.setBultos(bultos);
 		
-	    Object[] options = {"Nuevo Bulto", "Bulto más Pesado", "Bulto menos Pesado", "Promedio Peso"};
+	    Object[] options = {"Listado de Bultos","Nuevo Bulto", "Bulto más Pesado", "Bulto menos Pesado", "Promedio Peso", "Ingreso por Carga"};
 	    String opcion = (String)JOptionPane.showInputDialog(null,"¿Que deseas realizar?", "Menu de Opciones",
 	    		JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 	    
+	    // ------------ Opcion para ver el listado de los bultos que hay para el avion de carga -----------------
+	    if(opcion == "Listado de Bultos") {
+	    	//ArrayList<Bulto> lista = avionCarga.getBultos();
+	    	
+	    	if(bultos.size() > 0) {
+	    		String listaMens="Actualmente existen los bultos: \n";
+	    		
+	    		for (int i = 0; i < bultos.size(); i++) {
+	    			listaMens += "ID: "+bultos.get(i).getId()+" Peso: "+bultos.get(i).getPeso()+"kg \n";
+	    		}
+	    		
+	    		System.out.println(bultos.size());
+	    		JOptionPane.showMessageDialog(null, listaMens, "Bultos Existentes", JOptionPane.INFORMATION_MESSAGE);
+	    		
+	    		
+	    	}
+	    	else {
+	    		JOptionPane.showMessageDialog(null, "Su bulto es muy pesado, espere la proxima carga.", "Error", JOptionPane.INFORMATION_MESSAGE);
+	    	}
+	    }
 	    // ------------ Opcion para agregar un nuevo bulto al avion -----------------
 	    if(opcion == "Nuevo Bulto") {
 	    	boolean respuesta = avionCarga.agregarNuevoBulto(Double.parseDouble(JOptionPane.showInputDialog(null,"Peso del bulto:",JOptionPane.QUESTION_MESSAGE)));
@@ -172,10 +217,16 @@ public class Avion {
 	    	Bulto bultoLiviano = avionCarga.pesoBultoMasLiviano(bultos);
 	    	JOptionPane.showMessageDialog(null,"El bulto mas liviano es el bulto: \n ID: "+bultoLiviano.getId()+" Peso: "+bultoLiviano.getPeso()+"kg","Bulto Liviano",JOptionPane.INFORMATION_MESSAGE);;
 	    }
-	    // ------------ Opcion para ver el bulto con mayor peso en el avion -----------------
+	    // ------------ Opcion para ver el promedio de peso en el avion -----------------
 	    if(opcion == "Promedio Peso") {
 	    	double prom = avionCarga.pesoPromedioBultos(bultos);
     		JOptionPane.showMessageDialog(null, "El peso promedio de los bultos es de: "+prom+"kg", "Promedio", JOptionPane.INFORMATION_MESSAGE);
+	    }
+	    // ------------ Opcion para ver el bulto con mayor peso en el avion -----------------
+	    if(opcion == "Ingreso por Carga") {
+	    	double ingresoPeso = avionCarga.ingresoEnPesos(bultos);
+	    	double ingresoDolar = avionCarga.ingresoEnDolares(bultos);
+    		JOptionPane.showMessageDialog(null, "El ingreso en pesos fue de: $"+ingresoPeso+" y el dolares fue de: $"+ingresoDolar, "Ingreso de Carga", JOptionPane.INFORMATION_MESSAGE);
 	    }
 	    
 	  }

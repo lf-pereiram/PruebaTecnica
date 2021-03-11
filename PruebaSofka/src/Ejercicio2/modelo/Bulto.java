@@ -14,8 +14,6 @@ public class Bulto {
 	private static int FREE = 0;
 	private static int MEDIUM = 1500;
 	private static int HEAVY = 2500;
-	private static double CAMBIO_DOLAR = 3400; //Suponiendo de que es una tasa estable al dia de hoy
-	
 	
 	// ----------------- Getter and setter methods ----------------------
 	
